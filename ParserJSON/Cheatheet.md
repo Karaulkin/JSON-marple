@@ -208,8 +208,6 @@ int main() {
 
 5. **How take tag?**
 
-   JSON 
-
 Чтобы определить имена, используемые в JSON, и определить тип JSON (объект, массив, значение, строка и т.д.) с помощью библиотеки `json.hpp` (также известной как `nlohmann/json`), вы можете использовать следующие методы:
 
 - **Определение типа JSON**:
@@ -226,34 +224,35 @@ int main() {
 Пример кода, демонстрирующего использование этих методов:
 
 ```cpp
-#include "nlohmann/json.hpp"
 #include <iostream>
+#include <fstream>
+#include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
 
 int main() {
-    // Пример JSON объекта
-    json j = {
-        {"name", "John Doe"},
-        {"age", 30},
-        {"isStudent", false},
-        {"courses", {"math", "history"}}
-    };
+    std::ifstream file("example.json");
+    json data = json::parse(file);
 
-    // Проверка типа JSON
-    if (j.is_object()) {
-        std::cout << "Это объект JSON." << std::endl;
-    }
+    // Проверка типов и вывод имен ключей
+    for (auto& employee : data["employees"]) {
+        std::cout << "Employee name: " << employee["name"].get<std::string>() << std::endl;
+        std::cout << "Employee age: " << employee["age"].get<int>() << std::endl;
+        std::cout << "Department name: " << employee["department"]["name"].get<std::string>() << std::endl;
+        std::cout << "Department id: " << employee["department"]["id"].get<int>() << std::endl;
 
-    // Получение имен ключей в JSON объекте
-    for (auto& element : j.items()) {
-        std::cout << "Ключ: " << element.key() << std::endl;
+        for (auto& project : employee["projects"]) {
+            std::cout << "Project name: " << project["name"].get<std::string>() << std::endl;
+            std::cout << "Project start date: " << project["startDate"].get<std::string>() << std::endl;
+            std::cout << "Project end date: " << project["endDate"].get<std::string>() << std::endl;
+        }
     }
 
     return 0;
 }
 ```
 
-В этом примере мы создаем JSON объект `j` и проверяем его тип с помощью метода `is_object()`. Затем мы перебираем все ключи в объекте с помощью метода `items()` и выводим их на экран.
+Этот код сначала читает JSON из файла example.json, затем проходит по каждому объекту в массиве employees, извлекая и выводя информацию о каждом сотруднике, включая его имя, возраст, информацию о департаменте и проекты, к которым он принадлежит.
 
-Эти методы позволяют вам работать с JSON объектами и массивами, а также определять типы данных внутри JSON структур 
+Что он должен вывести:
+При выполнении этого кода вы увидите вывод, содержащий информацию о каждом сотруднике, включая его имя, возраст, название и идентификатор департамента, а также названия, даты начала и окончания проектов, к которым он принадлежит.

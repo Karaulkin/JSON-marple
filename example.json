@@ -1,0 +1,39 @@
+{
+    "employees": [
+       {
+         "name": "John Doe",
+         "age": 30,
+         "department": {
+           "name": "Finance",
+           "id": 1
+         },
+         "projects": [
+           {
+             "name": "Project A",
+             "startDate": "2023-01-01",
+             "endDate": "2023-12-31"
+           },
+           {
+             "name": "Project B",
+             "startDate": "2024-01-01",
+             "endDate": "2024-12-31"
+           }
+         ]
+       },
+       {
+         "name": "Jane Smith",
+         "age": 27,
+         "department": {
+           "name": "Marketing",
+           "id": 2
+         },
+         "projects": [
+           {
+             "name": "Project C",
+             "startDate": "2023-01-01",
+             "endDate": "2023-12-31"
+           }
+         ]
+       }
+    ]
+}

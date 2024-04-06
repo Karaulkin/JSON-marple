@@ -6,67 +6,44 @@
 using json = nlohmann::json;
 
 class ParserJson
+// будет реализовывать простые объекты
+// отдельный класс поможет углубляться до простых 
+// в помощь item и key и определение типа
+// Задача:
+// определить тип -> понять вложенные есть или нет -> показать
 {
 private:
-    std::string FileNameJson;
+    std::string FileNameJson, FilleNameTxt;
 
-    json JData; // full file >> JSON
+    json JData; // full file >> JSON || Something key >> JData
 
-    // Tags:
-    json JObject; // Object json
-    json JArray; // Array json
-    json JValue; // Value json
-    json JString; // String json
-    json JNumber; // Number json
 
 public:
-    ParserJson(std::string FileName);
+    ParserJson(std::string FileName); // По потоку чтения
+    ParserJson(json JName); // По объекту, который в своей структуре содержит другие сложные поля json
+    ParserJson(std::string FileJson, std::string FileTxt); // по потоку чтения и записи
     ~ParserJson();
-    
-    //? ParserJson(json JNewObject); // если мы заходим в новый объект то создаем новый класс для работы с полями этого объекта
 
-    // Parser tags: object, array, value, string, numbers
-    json BringJObject(std::string name); // Bring object JSON by key
-    json BringJArray(std::string name); // Bring array JSON by key
-    json BringJValue(std::string name); // Bring value JSON by key
-    json BringJString(std::string name); // Bring string JSON by key
-    json BringJNumber(std::string name); // Bring number JSON by key
+    void Parse(); // реекурсивная
 
-    // The parser inside the object
-    // ... 
+    // Открыть поток для чтения закрыть поток для чтения
 
-    //TODO Accessors and Mutators
+    // Accessors and Mutators
     void SetFileNameJson(std::string FileName);
-    std::string GetFileNameJson();
 
     std::string GetJson();
+    std::string GetTxt();
+
+    void SetJData(json);
+    json GetJData();
+
+    bool GetBoolNull(auto BNull);
+    bool GetBoolBoolean(auto BBool);
+    bool GetBoolNumber(auto BNumber);
+    bool GetBoolString(auto BString);
+    bool GetBoolObject(auto BObject);
+    bool GetBoolArray(auto BArray);
+
+    void PrintKeyType(auto element);
 };
-
-/*
-    Возможно нужно унаследовать новую структуру,
-    которая бы реализовывала вложенные объекты,
-    то есть объекты json вложенные (JObjects)
-*/
-class ParserJObject : ParserJson
-{
-    private:
-    /* data */
-    public:
-        ParserJObject(/* args */);
-        ~ParserJObject();
-
-};
-
-/*
-    Нужна структура, которая будет переводить патерны Maple формата
-*/
-class JsonToMaple
-{
-private:
-    /* data */
-public:
-    JsonToMaple(/* args */);
-    ~JsonToMaple();
-};
-
 #endif // __PARSER__JSON__
