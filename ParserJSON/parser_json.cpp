@@ -55,7 +55,7 @@ void ParserJson::recursive_iterate(const json& j, UnaryFunction f)
     {
         if (it->is_structured())
         {
-            *FilleNameTxt << (*it).key() << '\n';
+            *FilleNameTxt << it->first << '\n';
             recursive_iterate(*it, f);
         }
         else
@@ -71,4 +71,5 @@ void ParserJson::Parse(){
     });
 }
 
+// Тоскаем родителей
 //https://stackoverflow.com/questions/45934851/c-nlohmann-json-how-to-iterate-find-a-nested-object
