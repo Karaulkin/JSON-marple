@@ -78,7 +78,7 @@ void ParserJson::Parse()
         {
             PrintKeyType(element);           
 
-            ParserJson object(element.value());
+            ParserJson object(element.value(), this->FilleNameTxt);
 
             object.Parse();
         }
@@ -90,7 +90,7 @@ void ParserJson::Parse()
             {
                 PrintKeyType(arr_i);
 
-                ParserJson array(arr_i.value()); //  Возращает object
+                ParserJson array(arr_i.value(), this->FilleNameTxt); //  Возращает object
 
                 array.Parse();
             }
