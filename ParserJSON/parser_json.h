@@ -24,7 +24,12 @@ public:
     ParserJson(std::ifstream* FilleJson, std::ofstream* FilleTxt); // по потоку чтения и записи
     ~ParserJson();
 
-    void Parse(); // реекурсивная
+    template<class UnaryFunction>
+    void recursive_iterate(const json& j, UnaryFunction f); // реекурсивная
+
+    void Parse();
+
+    
 
     // Открыть поток для чтения закрыть поток для чтения
 
@@ -36,14 +41,5 @@ public:
 
     // void SetJData(json);
     // json GetJData();
-
-    bool GetBoolNull(auto BNull);
-    bool GetBoolBoolean(auto BBool);
-    bool GetBoolNumber(auto BNumber);
-    bool GetBoolString(auto BString);
-    bool GetBoolObject(auto BObject);
-    bool GetBoolArray(auto BArray);
-
-    void PrintKeyType(auto element);
 };
 #endif // __PARSER__JSON__

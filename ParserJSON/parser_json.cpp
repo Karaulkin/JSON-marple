@@ -48,86 +48,27 @@ ParserJson::~ParserJson()
     }
 }
 
-void ParserJson::Parse()
-{
-    // печать для типа начальная всегда для начала файла
-    for (auto& element : JData.items())
+template<class UnaryFunction>
+void ParserJson::recursive_iterate(const json& j, UnaryFunction f)
+{ 
+    for(auto it = j.begin(); it != j.end(); ++it)
     {
-        if (GetBoolNull(element)) //GetNull
+        if (it->is_structured())
         {
-            // PrintNull
-            PrintKeyType(element);
+            *FilleNameTxt << (*it).key() << '\n';
+            recursive_iterate(*it, f);
         }
-        if (GetBoolBoolean(element)) // GetBoolean
+        else
         {
-            // PrintBoolen
-            PrintKeyType(element);
-        }
-        if (GetBoolNumber(element))  // GetNumber
-        {
-            // Печатать
-            PrintKeyType(element);
-        }
-        if (GetBoolString(element)) // GetString
-        {
-            // Печатать строку
-            PrintKeyType(element);
-        }
-        if (GetBoolObject(element)) // GetObject
-        {
-            PrintKeyType(element);           
-
-            ParserJson object(element.value(), this->FilleNameTxt);
-
-            object.Parse();
-        }
-        if (GetBoolArray(element)) // GetArray
-        {
-            PrintKeyType(element);
-
-            for (auto& arr_i : element.value().items())
-            {
-                PrintKeyType(arr_i);
-
-                ParserJson array(arr_i.value(), this->FilleNameTxt); //  Возращает object
-
-                array.Parse();
-            }
+            f(it);
         }
     }
-
-
 }
 
-bool ParserJson::GetBoolNull(auto BNull)
-{
-    return BNull.value().is_null();
-}
-bool ParserJson::GetBoolBoolean(auto BBool)
-{
-    return BBool.value().is_null();
-}
-bool ParserJson::GetBoolNumber(auto BNumber)
-{
-    return BNumber.value().is_null();
-}
-bool ParserJson::GetBoolString(auto BString)
-{
-    return BString.value().is_null();
-}
-bool ParserJson::GetBoolObject(auto BObject)
-{
-    return BObject.value().is_null();
-}
-bool ParserJson::GetBoolArray(auto BArray)
-{
-    return BArray.value().is_null();
+void ParserJson::Parse(){
+    recursive_iterate(this->JData, [this](json::const_iterator it){
+        *FilleNameTxt << it.key() << ':' << it.value() << '\n';
+    });
 }
 
-void ParserJson::PrintKeyType(auto element)
-{
-    *FilleNameTxt << "\n\nКлюч: " << element.key() << '\n';
-    *FilleNameTxt << "\n\nТип: " << element.value() << '\n';
-}
-
-
+//https://stackoverflow.com/questions/45934851/c-nlohmann-json-how-to-iterate-find-a-nested-object
