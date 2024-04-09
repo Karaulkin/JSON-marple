@@ -20,10 +20,10 @@ ParserJson::ParserJson(std::ofstream FilleJsonName) : FilleNameJson(FilleJsonNam
 }
 */
 
-ParserJson::ParserJson(json JName, std::ifstream* FilleTxt) : JData(JName), FilleNameTxt(FilleTxt)
+ParserJson::ParserJson(json JName, std::ofstream* FilleTxt) : JData(JName), FilleNameTxt(FilleTxt)
 {}
 
-ParserJson::ParserJson(std::ofstream* FilleJson, std::ifstream* FilleTxt) : FilleNameJson(FilleJson), FilleNameTxt(FilleTxt)
+ParserJson::ParserJson(std::ifstream* FilleJson, std::ofstream* FilleTxt) : FilleNameJson(FilleJson), FilleNameTxt(FilleTxt)
 {
 
     if (!*FilleNameJson) {
@@ -47,7 +47,6 @@ ParserJson::~ParserJson()
         delete FilleNameTxt;
     }
 }
-
 
 void ParserJson::Parse()
 {
@@ -127,8 +126,8 @@ bool ParserJson::GetBoolArray(auto BArray)
 
 void ParserJson::PrintKeyType(auto element)
 {
-    std::cout << "\n\nКлюч: " << element.key() << '\n';
-    std::cout << "\n\nТип: " << element.value() << '\n';
+    *FilleNameTxt << "\n\nКлюч: " << element.key() << '\n';
+    *FilleNameTxt << "\n\nТип: " << element.value() << '\n';
 }
 
 
