@@ -20,23 +20,34 @@ ParserJson::ParserJson(std::ofstream FilleJsonName) : FilleNameJson(FilleJsonNam
 }
 */
 
-ParserJson::ParserJson(json JName, std::ifstream &FilleTxt) : FilleNameTxt(FilleTxt), FilleNameJson()
-{
-    this->JData = JName;
-}
+ParserJson::ParserJson(json JName, std::ifstream* FilleTxt) : JData(JName), FilleNameTxt(FilleTxt)
+{}
 
-ParserJson::ParserJson(std::ofstream &FilleJson, std::ifstream &FilleTxt) : FilleNameJson(FilleJson), FilleNameTxt(FilleTxt)
+ParserJson::ParserJson(std::ofstream* FilleJson, std::ifstream* FilleTxt) : FilleNameJson(FilleJson), FilleNameTxt(FilleTxt)
 {
 
-    if (!FilleJson) {
+    if (!*FilleNameJson) {
         // throw
         std::cerr << "Not found json." << std::endl;
     }
 
-    this->JData = json::parse(FilleJson);
+    this->JData = json::parse(*FilleNameJson);
 }
 
-ParserJson::~ParserJson() = default;
+ParserJson::~ParserJson()
+{
+    if (FilleNameJson)
+    {
+        FilleNameJson->close();
+        delete FilleNameJson;
+    }
+    if (FilleNameTxt)
+    {
+        FilleNameTxt->close();
+        delete FilleNameTxt;
+    }
+}
+
 
 void ParserJson::Parse()
 {
