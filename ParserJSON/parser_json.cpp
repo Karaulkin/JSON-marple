@@ -3,39 +3,37 @@
 #include <iostream>
 #include <fstream>
 
-ParserJson::ParserJson(std::string FileJsonName) : FileNameJson(FileJsonName)
+/*
+ParserJson::ParserJson(std::ofstream FilleJsonName) : FilleNameJson(FilleJsonName)
 {
     this->FilleNameTxt = "conf_marple.txt";
 
-    std::ifstream file_json(FileNameJson);
-    std::ofstream file_txt(FilleNameTxt); // если нету создаст
+    std::ifstream fille_json(FilleNameJson);
+    std::ofstream fille_txt(FilleNameTxt); // если нету создаст
 
-    if (!file_json) {
+    if (!fille_json) {
         // throw
         std::cerr << "Не удалось открыть файл." << std::endl;
     }
 
-    this->JData = json::parse(file_json);
+    this->JData = json::parse(fille_json);
 }
+*/
 
-ParserJson::ParserJson(json JName) : FileNameJson(nullptr), FilleNameTxt(nullptr)
+ParserJson::ParserJson(json JName, std::ifstream &FilleTxt) : FilleNameTxt(FilleTxt), FilleNameJson()
 {
     this->JData = JName;
-
-    // нужен конструктор копирования
 }
 
-ParserJson::ParserJson(std::string FileJson, std::string FileTxt) : FileNameJson(FileJson), FilleNameTxt(FileTxt)
+ParserJson::ParserJson(std::ofstream &FilleJson, std::ifstream &FilleTxt) : FilleNameJson(FilleJson), FilleNameTxt(FilleTxt)
 {
-    std::ifstream file_json(FileNameJson);
-    std::ofstream file_txt(FilleNameTxt); // если нету создаст
 
-    if (!file_json) {
+    if (!FilleJson) {
         // throw
         std::cerr << "Not found json." << std::endl;
     }
 
-    this->JData = json::parse(file_json);
+    this->JData = json::parse(FilleJson);
 }
 
 ParserJson::~ParserJson() = default;

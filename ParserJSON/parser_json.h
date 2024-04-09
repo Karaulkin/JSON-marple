@@ -13,15 +13,15 @@ class ParserJson
 // определить тип -> понять вложенные есть или нет -> показать
 {
 private:
-    std::string FileNameJson, FilleNameTxt;
+    std::ofstream FilleNameJson;
+    std::ifstream FilleNameTxt;
 
     json JData; // full file >> JSON || Something key >> JData
 
 
 public:
-    ParserJson(std::string FileName); // По потоку чтения
-    ParserJson(json JName); // По объекту, который в своей структуре содержит другие сложные поля json
-    ParserJson(std::string FileJson, std::string FileTxt); // по потоку чтения и записи
+    ParserJson(json JName, std::ifstream &FilleTxt); // По объекту, который в своей структуре содержит другие сложные поля json
+    ParserJson(std::ofstream &FilleJson, std::ifstream &FilleTxt); // по потоку чтения и записи
     ~ParserJson();
 
     void Parse(); // реекурсивная
@@ -29,13 +29,13 @@ public:
     // Открыть поток для чтения закрыть поток для чтения
 
     // Accessors and Mutators
-    void SetFileNameJson(std::string FileName);
+    // void SetFileNameJson(std::ifstream FilleName);
 
-    std::string GetJson();
-    std::string GetTxt();
+    // std::string GetJson();
+    // std::string GetTxt();
 
-    void SetJData(json);
-    json GetJData();
+    // void SetJData(json);
+    // json GetJData();
 
     bool GetBoolNull(auto BNull);
     bool GetBoolBoolean(auto BBool);
