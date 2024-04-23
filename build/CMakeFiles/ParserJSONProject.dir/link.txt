@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/ParserJSONProject.dir/ParserJSON/parser_json.cpp.o CMakeFiles/ParserJSONProject.dir/main.cpp.o -o ParserJSONProject 

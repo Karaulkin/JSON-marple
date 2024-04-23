@@ -17,6 +17,7 @@ int main() {
     //fille_txt.open(NameTxt)
     // ... Передать ссылку на потоки
     ParserJson p(fille_json, fille_txt);
+    
     p.Parse();
     // закрыть поток для записи
     // закрыть поток для чтения

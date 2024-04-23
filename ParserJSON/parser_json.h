@@ -24,12 +24,14 @@ public:
     ParserJson(std::ifstream* FilleJson, std::ofstream* FilleTxt); // по потоку чтения и записи
     ~ParserJson();
 
-    template<class UnaryFunction>
-    void recursive_iterate(const json& j, UnaryFunction f); // реекурсивная
+    template<class BinaryFunction>
+    void recursive_iterate(const json& j, BinaryFunction f, const std::string& parent_key = ""); // реекурсивная
 
     void Parse();
 
-    
+    void printStruct(json::const_iterator it, const std::string& parent_key);
+
+    void printArrayIndex(json::const_iterator it, const std::string& parent_key);
 
     // Открыть поток для чтения закрыть поток для чтения
 

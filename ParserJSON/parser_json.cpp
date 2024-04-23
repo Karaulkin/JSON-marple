@@ -48,27 +48,47 @@ ParserJson::~ParserJson()
     }
 }
 
-template<class UnaryFunction>
-void ParserJson::recursive_iterate(const json& j, UnaryFunction f)
+template<class BinaryFunction>
+void ParserJson::recursive_iterate(const json& j, BinaryFunction f, const std::string& parent_key) 
 { 
     for(auto it = j.begin(); it != j.end(); ++it)
     {
-        if (it->is_structured())
+        if (it->is_object())
         {
-            recursive_iterate(*it, f);
+            std::string key = it.key();
+            printStruct(it, parent_key);
+            recursive_iterate(*it, f, key);
+        }
+        else if (it->is_array())
+        {
+            for (size_t i = 0; i < it->size(); ++i)
+            {
+                recursive_iterate((*it)[i], f, parent_key + "[" + std::to_string(i) + "]");
+            }
         }
         else
         {
-            f(it);
+            f(it, parent_key);
         }
     }
 }
 
 void ParserJson::Parse(){
-    recursive_iterate(this->JData, [this](json::const_iterator it){
-        *FilleNameTxt << it.key() << ':' << it.value() << '\n';
+    recursive_iterate(this->JData, [this](json::const_iterator it, const std::string& parent_key){
+        *FilleNameTxt << parent_key << ':' << it.key() << ':' << it.value() << '\n';
     });
 }
+
+void ParserJson::printStruct(json::const_iterator it, const std::string& parent_key)
+{
+    *FilleNameTxt << parent_key << ':' << it.key() << '\n';
+}
+
+void ParserJson::printArrayIndex(json::const_iterator it, const std::string& parent_key)
+{
+    *FilleNameTxt << parent_key << ':' << std::distance(it->begin(), it) << '\n';
+}
+
 
 // Тоскаем родителей
 //https://stackoverflow.com/questions/45934851/c-nlohmann-json-how-to-iterate-find-a-nested-object

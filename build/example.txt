@@ -1,0 +1,19 @@
+[0]:age:30
+[0]:department
+department:id:1
+department:name:"Finance"
+[0]:name:"John Doe"
+[0][0]:endDate:"2023-12-31"
+[0][0]:name:"Project A"
+[0][0]:startDate:"2023-01-01"
+[0][1]:endDate:"2024-12-31"
+[0][1]:name:"Project B"
+[0][1]:startDate:"2024-01-01"
+[1]:age:27
+[1]:department
+department:id:2
+department:name:"Marketing"
+[1]:name:"Jane Smith"
+[1][0]:endDate:"2023-12-31"
+[1][0]:name:"Project C"
+[1][0]:startDate:"2023-01-01"
