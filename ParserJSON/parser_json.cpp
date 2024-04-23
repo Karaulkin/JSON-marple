@@ -55,7 +55,6 @@ void ParserJson::recursive_iterate(const json& j, UnaryFunction f)
     {
         if (it->is_structured())
         {
-            *FilleNameTxt << it->first << '\n';
             recursive_iterate(*it, f);
         }
         else
