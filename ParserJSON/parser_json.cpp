@@ -53,17 +53,19 @@ void ParserJson::recursive_iterate(const json& j, BinaryFunction f, const std::s
 { 
     for(auto it = j.begin(); it != j.end(); ++it)
     {
+        std::string key = it.key();
         if (it->is_object())
         {
-            std::string key = it.key();
             printStruct(it, parent_key);
             recursive_iterate(*it, f, key);
         }
         else if (it->is_array())
         {
+            *FilleNameTxt << parent_key << ':' << key << '\n';
             for (size_t i = 0; i < it->size(); ++i)
             {
-                recursive_iterate((*it)[i], f, parent_key + "[" + std::to_string(i) + "]");
+                //*FilleNameTxt << parent_key << ':' << key << '[' << std::to_string(i) << "]:" /*<< (*it)[i] << '\n'*/;
+                recursive_iterate((*it)[i], f, parent_key + "[" + key + "][" + std::to_string(i) + "]");
             }
         }
         else
@@ -72,6 +74,7 @@ void ParserJson::recursive_iterate(const json& j, BinaryFunction f, const std::s
         }
     }
 }
+
 
 void ParserJson::Parse(){
     recursive_iterate(this->JData, [this](json::const_iterator it, const std::string& parent_key){
