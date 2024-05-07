@@ -5,8 +5,6 @@
 
 using json = nlohmann::json;
 
-namespace parser
-{
     class ParserJson
     // будет реализовывать простые объекты
     // отдельный класс поможет углубляться до простых 
@@ -35,7 +33,7 @@ namespace parser
 
 
     public:
-        ParserJson(json JName, std::ofstream* FilleTxt, int tabulation); // По объекту, который в своей структуре содержит другие сложные поля json
+        ParserJson(json JName, std::ofstream* FilleTxt); // По объекту, который в своей структуре содержит другие сложные поля json
         ParserJson(std::ifstream* FilleJson, std::ofstream* FilleTxt); // по потоку чтения и записи
         ~ParserJson();
 
@@ -52,5 +50,4 @@ namespace parser
         // void SetJData(json);
         // json GetJData();
     };
-}
 #endif // __PARSER__JSON__

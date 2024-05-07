@@ -20,10 +20,10 @@ ParserJson::ParserJson(std::ofstream FilleJsonName) : FilleNameJson(FilleJsonNam
 }
 */
 
-parser::ParserJson::ParserJson(json JName, std::ofstream* FilleTxt, int tabulation) : JData(JName), FilleNameTxt(FilleTxt), tabs(tabulation)
+ParserJson::ParserJson(json JName, std::ofstream* FilleTxt) : JData(JName), FilleNameTxt(FilleTxt)
 {}
 
-parser::ParserJson::ParserJson(std::ifstream* FilleJson, std::ofstream* FilleTxt) : FilleNameJson(FilleJson), FilleNameTxt(FilleTxt)
+ParserJson::ParserJson(std::ifstream* FilleJson, std::ofstream* FilleTxt) : FilleNameJson(FilleJson), FilleNameTxt(FilleTxt)
 {
     if (!*FilleNameJson) {
         // throw
@@ -33,7 +33,7 @@ parser::ParserJson::ParserJson(std::ifstream* FilleJson, std::ofstream* FilleTxt
     this->JData = json::parse(*FilleNameJson);
 }
 
-parser::ParserJson::~ParserJson()
+ParserJson::~ParserJson()
 {
     if (FilleNameJson)
     {
@@ -48,34 +48,31 @@ parser::ParserJson::~ParserJson()
 }
 
 template<class BinaryFunction>
-void parser::ParserJson::recursive_iterate(const json& j, BinaryFunction f, const std::string& parent_key) 
+void ParserJson::recursive_iterate(const json& j, BinaryFunction f, const std::string& parent_key) 
 {
-    tabs++;
     for(auto it = j.begin(); it != j.end(); ++it)
     {
         std::string key = it.key();
+
         if (it->is_object())
         {
-            printStruct(it, parent_key);
-            tab++;
+            printStruct(it, PrintTabs());
             recursive_iterate(*it, f, key);
-            tab--;
             *FilleNameTxt << PrintTabs() << end << '\n';
         }
         else if (it->is_array())
         {
-            //*FilleNameTxt << parent_key << ':' << key << '\n';
             *FilleNameTxt << PrintTabs() << key << " =" << begin << '\n';
-            tab++;
+
             for (size_t i = 0; i < it->size(); ++i)
             {
-                //*FilleNameTxt << parent_key << ':' << key << '[' << std::to_string(i) << "]:" << '\n' /*<< (*it)[i] << '\n'*/; 
                 *FilleNameTxt << PrintTabs() << key << "[Index:" << std::to_string(i) << "] =" << begin << '\n';
-                //recursive_iterate((*it)[i], f, parent_key + "[" + key + "][" + std::to_string(i) + "]");
+
                 recursive_iterate((*it)[i], f, parent_key);
+
                 *FilleNameTxt << PrintTabs() << end << '\n';
             }
-            tab--;
+
             *FilleNameTxt << PrintTabs() << end << '\n';
         }
         else
@@ -86,16 +83,17 @@ void parser::ParserJson::recursive_iterate(const json& j, BinaryFunction f, cons
 }
 
 
-void parser::ParserJson::Parse(){
-    recursive_iterate(this->JData, [this](json::const_iterator it, const std::string& parent_key){
+void ParserJson::Parse()
+{
+    recursive_iterate(this->JData, [this](json::const_iterator it, const std::string& parent_key)
+    {
         *FilleNameTxt << PrintTabs() << it.key()<< " = " << it.value() << '\n';
     });
 }
 
-void parser::ParserJson::printStruct(json::const_iterator it, const std::string& parent_key)
+void ParserJson::printStruct(json::const_iterator it, const std::string& tabs)
 {
-    //*FilleNameTxt << parent_key << ':' << it.key() << '\n';
-    *FilleNameTxt << PrintTabs() << it.key() << " =" << begin << '\n';
+    *FilleNameTxt << tabs << it.key() << " =" << begin << '\n';
 }
 
 /*
@@ -109,7 +107,7 @@ void ParserJson::printArrayIndex(json::const_iterator it, const std::string& par
 // Тоскаем родителей
 //https://stackoverflow.com/questions/45934851/c-nlohmann-json-how-to-iterate-find-a-nested-object
 
-std::string parser::ParserJson::PrintTabs()
+std::string ParserJson::PrintTabs()
 {
     std::string tabulation;
 
@@ -118,5 +116,4 @@ std::string parser::ParserJson::PrintTabs()
         tabulation += '\t';
     }
     return tabulation;
-
 }
