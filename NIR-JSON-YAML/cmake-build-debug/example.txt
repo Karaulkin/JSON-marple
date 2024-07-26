@@ -1,0 +1,33 @@
+employees[1] = %%begin
+age = 30
+department = %%begin
+id = 1
+name = "Finance"
+%%end
+name = "John Doe"
+projects[1] = %%begin
+endDate = "2023-12-31"
+name = "Project A"
+startDate = "2023-01-01"
+%%end
+projects[2] = %%begin
+endDate = "2024-12-31"
+name = "Project B"
+startDate = "2024-01-01"
+%%end
+%%end
+employees[2] = %%begin
+age = 27
+department = %%begin
+id = 2
+name = "Marketing"
+%%end
+name = "Jane Smith"
+projects[1] = %%begin
+endDate = "2023-12-31"
+name = "Project C"
+startDate = "2023-01-01"
+%%end
+%%end
+some_1 = "employees[1]"
+some_2 = "employees[2]"

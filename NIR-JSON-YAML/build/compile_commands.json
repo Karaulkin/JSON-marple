@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/kirill/NIR-JSON-YAML/build",
+  "command": "/usr/bin/g++  -I/home/kirill/NIR-JSON-YAML/ParserJSON -I/home/kirill/NIR-JSON-YAML/Tabulation -I/home/kirill/NIR-JSON-YAML/ParserJSON/single_include -g -o CMakeFiles/ParserJSONProject.dir/ParserJSON/parser_json.cpp.o -c /home/kirill/NIR-JSON-YAML/ParserJSON/parser_json.cpp",
+  "file": "/home/kirill/NIR-JSON-YAML/ParserJSON/parser_json.cpp"
+},
+{
+  "directory": "/home/kirill/NIR-JSON-YAML/build",
+  "command": "/usr/bin/g++  -I/home/kirill/NIR-JSON-YAML/ParserJSON -I/home/kirill/NIR-JSON-YAML/Tabulation -I/home/kirill/NIR-JSON-YAML/ParserJSON/single_include -g -o CMakeFiles/ParserJSONProject.dir/Tabulation/tabulation.cpp.o -c /home/kirill/NIR-JSON-YAML/Tabulation/tabulation.cpp",
+  "file": "/home/kirill/NIR-JSON-YAML/Tabulation/tabulation.cpp"
+},
+{
+  "directory": "/home/kirill/NIR-JSON-YAML/build",
+  "command": "/usr/bin/g++  -I/home/kirill/NIR-JSON-YAML/ParserJSON -I/home/kirill/NIR-JSON-YAML/Tabulation -I/home/kirill/NIR-JSON-YAML/ParserJSON/single_include -g -o CMakeFiles/ParserJSONProject.dir/main.cpp.o -c /home/kirill/NIR-JSON-YAML/main.cpp",
+  "file": "/home/kirill/NIR-JSON-YAML/main.cpp"
+}
+]

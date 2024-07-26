@@ -1,0 +1,3 @@
+/home/kirill/NIR-JSON-YAML/cmake-build-debug/CMakeFiles/ParserJSONProject.dir
+/home/kirill/NIR-JSON-YAML/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/kirill/NIR-JSON-YAML/cmake-build-debug/CMakeFiles/rebuild_cache.dir
